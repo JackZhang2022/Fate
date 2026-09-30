@@ -9,6 +9,67 @@
 * 卦辞解读：查看卦辞、爻辞及其对应的白话译文与义理阐释
 * 浏览卦象：浏览全部六十四卦的卦辞与爻辞，无需起卦即可查阅
 
+## 运行与构建
+
+### 环境要求
+
+* Node.js >= 20
+* pnpm >= 9
+
+### 本地运行
+
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器（默认 http://localhost:5173）
+pnpm run dev
+```
+
+### 构建
+
+```bash
+# 构建生产版本，产物输出到 dist/ 目录
+pnpm run build
+
+# 本地预览构建产物
+pnpm run preview
+```
+
+## 部署
+
+### Docker 部署
+
+项目提供多阶段 Docker 构建（Node 编译 + Nginx 托管），使用 docker-compose 一键启动：
+
+```bash
+# 构建镜像
+docker compose build
+
+# 启动服务（默认映射到 8081 端口）
+docker compose up -d
+```
+
+启动后通过 `http://<服务器IP>:8081` 访问。
+
+如需修改端口，编辑 `docker-compose.yml` 中的 `ports` 配置项。
+
+#### 使用 Just 一键重建
+
+项目提供了 Justfile，可通过 `just` 命令一键重新构建并更新容器：
+
+```bash
+# 安装 just（如未安装）
+# macOS:      brew install just
+# Linux:      cargo install just 或通过包管理器安装
+# 详见: https://github.com/casey/just
+
+# 一键重新构建项目、重建镜像并更新容器
+just rebuild
+```
+
+该命令会依次执行：构建前端项目 → 移除旧容器与镜像 → 构建新镜像 → 启动新容器。
+
 ## 起卦原理
 
 ### 铜钱起卦法（三钱法）
@@ -123,3 +184,7 @@
 
 * 静爻（少阳、少阴）：标准阴阳爻显示
 * 动爻（老阳、老阴）：在爻旁标注动爻标记（如小圆点或变色），变卦中对应爻位同步高亮
+
+## 许可证
+
+本项目基于 [MIT 许可证](LICENSE) 开源。
